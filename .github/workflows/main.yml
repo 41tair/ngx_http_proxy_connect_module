@@ -4,15 +4,16 @@ on:
     branches:
       - master
 jobs:
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v2
-    - name: build docker image
-      run: |
-        docker build -t docker.pkg.github.com/41tair/ngx_http_proxy_connect_module/nginx:1.19.3 .
-    - name: push to github package
-      env:
-        GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
-      run: |
-        echo $(GITHUBTOKEN) |docker login https://docker.pkg.github.com -u 41tair --password-stdin
-        docker push docker.pkg.github.com/41tair/ngx_http_proxy_connect_module/nginx:1.19.3
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        - name: build docker image
+          run: |
+            docker build -t docker.pkg.github.com/41tair/ngx_http_proxy_connect_module/nginx:1.19.3 .
+        - name: push to github package
+          env:
+            GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
+          run: |
+            echo $(GITHUBTOKEN) |docker login https://docker.pkg.github.com -u 41tair --password-stdin
+            docker push docker.pkg.github.com/41tair/ngx_http_proxy_connect_module/nginx:1.19.3
