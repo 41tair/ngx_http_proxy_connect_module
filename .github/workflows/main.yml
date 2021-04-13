@@ -15,5 +15,5 @@ jobs:
         env:
           token: ${{ secrets.GITHUBTOKEN }}
         run: |
-          echo "$token" |docker login https://ghcr.io -u 41tair --password-stdin
+          docker login https://ghcr.io -u 41tair -p "$token"
           docker push ghcr.io/41tair/ngx_http_proxy_connect_module/nginx:1.19.3
