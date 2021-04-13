@@ -11,9 +11,12 @@ jobs:
       - name: build docker image
         run: |
           docker build -t docker.pkg.github.com/41tair/ngx_http_proxy_connect_module/nginx:1.19.3 .
+      - name: login to github package docker registry
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: 41tair
+          password: ${{ secrets.GITHUBTOKEN }}
       - name: push to github package
-        env:
-          GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
         run: |
-          echo $(GITHUBTOKEN) |docker login https://docker.pkg.github.com -u 41tair --password-stdin
           docker push docker.pkg.github.com/41tair/ngx_http_proxy_connect_module/nginx:1.19.3
